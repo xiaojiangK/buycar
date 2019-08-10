@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购车计算器</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            -webkit-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        body,html{
+            color: #181818;
+            font-size: .24rem;
+            background: #fff;
+        }
+        .wrap{
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+            max-width: 750px;
+            position: relative;
+        }
+        .wrap .top_bg{
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 100%;
+            height: 2.6rem;
+            display: block;
+            position: absolute;
+            background: #b50727;
+        }
+        .wrap .main{
+            z-index: 9;
+            position: relative;
+            padding: .6rem 0 .8rem;
+        }
+        .main .title{
+            font-size: .32rem;
+            font-weight: bold;
+            padding: .42rem 0 .3rem .38rem;
+        }
+        .main .buy_item{
+            width: 95%;
+            background: #fff;
+            margin: 0 auto .5rem;
+            border-radius: .15rem;
+            -webkit-box-shadow: 0 .9rem 1.8rem 0 rgba(10, 31, 68, 0.12);
+            -ms-box-shadow: 0 .9rem 1.8rem 0 rgba(10, 31, 68, 0.12);
+            box-shadow: 0 .9rem 1.8rem 0 rgba(10, 31, 68, 0.12);
+        }
+        .car_price .form{
+            padding: 0 .38rem .35rem;
+            position: relative;
+            border-bottom: .02rem dashed #ddd;
+        }
+        .car_price .form span{
+            font-size: .5rem;
+            position: absolute;
+        }
+        .car_price .form input{
+            border: none;
+            -webkit-outline: none;
+            -ms-outline: none;
+            outline: none;
+            height: .6rem;
+            width: 100%;
+            font-size: .6rem;
+            line-height: .6rem;
+            padding: 0 0 0 .55rem;
+        }
+        .car_price .tip{
+            color: #999;
+            padding: .35rem .4rem;
+        }
+        .main .loan_set .list{
+            overflow: hidden;
+        }
+        .main .loan_set>.list{
+            margin: 0 0 .25rem;
+            padding: 0 .3rem .35rem;
+            border-bottom: .02rem dashed #ddd;
+        }
+        .loan_set .list .item{
+            width: 50%;
+            float: left;
+            height: .2rem;
+            font-size: .28rem;
+            margin: 0 0 .38rem;
+        }
+        .loan_set .item .label{
+            color: #999;
+        }
+        .loan_set .item .value{
+            color: #e12525;
+            margin: 0 0 0 .2rem;
+        }
+        .loan_set .item .solid{
+            padding: 0 0 .05rem;
+            border-bottom: .02rem solid #f19797;
+        }
+        .loan_set .item img{
+            width: .12rem;
+            height: .22rem;
+            margin: 0 0 0 .2rem;
+            vertical-align: middle;
+        }
+        .loan_set .item select{
+            display: none;
+            -webkit-outline: none;
+            outline: none;
+        }
+        .loan_set .detail{
+            padding: 0 .3rem .2rem;
+        }
+        .loan_set .detail .item{
+            width: 100%;
+        }
+        .loan_set .detail .value{
+            float: right;
+            color: #181818;
+        }
+        .loan_set .detail .tip{
+            color: #999;
+            line-height: .5rem;
+        }
+        .repay_detail table{
+            width: 100%;
+            padding: 0 0 .2rem;
+        }
+        .repay_detail table tr{
+            height: .56rem;
+            text-align: center;
+        }
+        .repay_detail table tr:first-child{
+            color: #000;
+            font-weight: bold;
+        }
+        .repay_detail table tr:nth-of-type(2n){
+            background: #efefef;
+        }
+        .repay_detail table td{
+            width: 25%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="top_bg"></div>
+        <div class="main">
+            <div class="buy_item car_price">
+                <div class="title">车辆价格</div>
+                <div class="form">
+                    <span>￥</span>
+                    <input type="number" placeholder="请输入车辆价格" />
+                </div>
+                <div class="tip">*车辆价格为裸车价格，不包含购置税</div>
+            </div>
+            <div class="buy_item loan_set">
+                <div class="title">贷款设置</div>
+                <div class="list">
+                    <div class="item">
+                        <span class="label">首付比例</span>
+                        <span class="value">
+                            <select data-idx="0">
+                                <option value="0">0</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span class="setval"><span class="num">30</span>%<img src="images/right-icon.png" /></span>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <span class="label">贷款期限</span>
+                        <span class="value">
+                            <select data-idx="1">
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="18">18</option>
+                                <option value="24">24</option>
+                                <option value="30">30</option>
+                                <option value="36">36</option>
+                                <option value="42">42</option>
+                                <option value="48">48</option>
+                                <option value="54">54</option>
+                                <option value="60">60</option>
+                            </select>
+                            <span class="setval"><span class="num">36</span>期<img src="images/right-icon.png" /></span>
+                        </span>
+                    </div>
+                    <div class="item">
+                        <span class="label">贷款利率</span>
+                        <span class="value solid">6.65%</span>
+                    </div>
+                    <div class="item">
+                        <span class="label">还款方式</span>
+                        <span class="value">
+                            <select data-idx="2">
+                                <option value="1">等额本息</option>
+                                <option value="2">等额本金</option>
+                            </select>
+                            <span class="setval"><span class="num">等额本息</span><img src="images/right-icon.png" /></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="detail">
+                    <div class="list">
+                        <div class="item">
+                            <span class="label">首付金额：</span>
+                            <span class="value">￥0.00</span>
+                        </div>
+                        <div class="item">
+                            <span class="label">贷款金额：</span>
+                            <span class="value">￥0.00</span>
+                        </div>
+                        <div class="item">
+                            <span class="label">支付利息：</span>
+                            <span class="value">￥0.00</span>
+                        </div>
+                        <div class="item">
+                            <span class="label">还款总额：</span>
+                            <span class="value">￥0.00</span>
+                        </div>
+                    </div>
+                    <div class="tip">*注：仅供参考，实际支付金额以最终客户贷款合同为准，详情可咨询当地经销商</div>
+                </div>
+            </div>
+            <div class="buy_item repay_detail">
+                <div class="title">还款详情</div>
+                <table cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td></td>
+                        <td>应还本金</td>
+                        <td>应还利息</td>
+                        <td>应还金额</td>
+                    </tr>
+                    <tr class="item">
+                        <td>合计</td>
+                        <td>￥0.00</td>
+                        <td>￥0.00</td>
+                        <td>￥0.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="images/js/jquery.min.js"></script>
+    <script>
+        
+        var $loan = {
+            carPrice: 0,
+            downpay: 30,     // 首付比例
+            corpus: 0,
+            period: 36,
+            total:       0,
+            rateTotal:   0,
+            detailPerMs: [],
+            loadType:    1, //1为等额本息  2为等额本金
+            selectedMonth: 6,
+            debxIsActive:true,//等额本金被选中
+            debjIsActive:false,
+            periodType:   'onlyMonth',//onlyMonth为直选中了月， yearAndMonth为年和月都选中了
+            rateType:   '1',//利率的类型 日利率还是月利率 年利率  最后用日利率算出年利率/12得出月利率
+            rate:       6.65,
+            mrate:      0,
+            dayRate:     0,//日利率
+            monRate:   0,//月利率
+            yearRate:    0,//year利率
+        };
+
+
+        function initRateType (){
+            if(localStorage.getItem('rateType')){
+                $loan.rateType = localStorage.getItem('rateType');
+            }else{
+                $loan.rateType = '2';
+            }
+        }
+
+        initRateType();
+        
+        function caculate() {
+            // if(!$loan.corpus || $loan.corpus == 0 || !$loan.rate){
+            //     return ;
+            // }
+            caculateRate();
+            localStorage.setItem('rateType', $loan.rateType);
+            if($loan.constructor == 0){
+                return;
+            }
+            if($loan.loadType == 1){
+                getDetailPerMsByBenxi();
+                return;
+            }
+            if($loan.loadType == 2){
+                getDetailPerMsByBenjin();
+                return;
+            }
+        }
+
+        //等额本息每月还款额
+        function getTotalPerM(){
+            //var _loan;
+            //_loan = $loan;
+            var x = $loan.mrate/12/100;
+            var y = $loan.period;
+            return $loan.corpus * (x*Math.pow((1+x),y))/(Math.pow((1+x),y)-1);
+        }
+        //还款总额
+        function getTotal() {
+            return getTotalPerM() * $loan.period;
+        }
+        //总利息
+        function getRateTotal() {
+            return getTotal() - $loan.corpus;
+        }
+        //等额本息获取每月明细
+        function getDetailPerMsByBenxi() {
+            $loan.detailPerMs = [];
+            for (var i = 0; i < $loan.period; i++) {
+                $loan.detailPerMs[i] = makeDetailPerM(i);
+            };
+            $('table .item').remove();
+            var value = $('.detail .value');
+            for (let i = 0; i < $loan.detailPerMs.length; i++) {
+                var item = $loan.detailPerMs[i];
+                $('table tbody').append(`<tr class="item"><td>${i+1}</td><td>￥${item.benjin.toFixed(2)}</td><td>￥${item.lixi.toFixed(2)}</td><td>￥${item.corpusThisM.toFixed(2)}</td></tr>`);
+            }
+            $loan.total = (getTotalPerM() * $loan.period).toFixed(2);
+            $loan.rateTotal = (getTotal() - $loan.corpus).toFixed(2);
+            $(value).eq(0).text(`￥${($loan.carPrice * $loan.downpay / 100).toFixed(2)}`)
+            $(value).eq(1).text(`￥${$loan.corpus.toFixed(2)}`)
+            $(value).eq(2).text(`￥${$loan.rateTotal}`)
+            $(value).eq(3).text(`￥${$loan.total}`)
+            $('table tbody').append(`<tr class="item"><td>合计</td><td>￥${$loan.corpus.toFixed(2)}</td><td>￥${$loan.rateTotal}</td><td>￥${$loan.total}</td></tr>`);
+        }
+        //等额本金获取每月明细
+        function getDetailPerMsByBenjin() {
+            $loan.detailPerMs = [];
+            for (var i = 0; i < $loan.period; i++) {
+                $loan.detailPerMs[i] = makeDetailPerMByBenjin(i);
+            };
+            $('table .item').remove();
+            var value = $('.detail .value');
+            for (let i = 0; i < $loan.detailPerMs.length; i++) {
+                var item = $loan.detailPerMs[i];
+                $('table tbody').append(`<tr class="item"><td>${i+1}</td><td>￥${item.benjin.toFixed(2)}</td><td>￥${item.lixi.toFixed(2)}</td><td>￥${item.corpusThisM.toFixed(2)}</td></tr>`);
+            }
+            $loan.total = ($loan.detailPerMs[$loan.period -1].leiji).toFixed(2);
+            $loan.rateTotal = ($loan.detailPerMs[$loan.period -1].lixiTotal).toFixed(2);
+            $(value).eq(0).text(`￥${($loan.carPrice * $loan.downpay / 100).toFixed(2)}`)
+            $(value).eq(1).text(`￥${$loan.corpus.toFixed(2)}`)
+            $(value).eq(2).text(`￥${$loan.rateTotal}`)
+            $(value).eq(3).text(`￥${$loan.total}`)
+            $('table tbody').append(`<tr class="item"><td>合计</td><td>￥${$loan.corpus.toFixed(2)}</td><td>￥${$loan.rateTotal}</td><td>￥${$loan.total}</td></tr>`);
+
+        }
+
+        //计算年利率 日利率 月利率
+        function caculateRate() {
+            switch ($loan.rateType){
+                case '1':
+                    //已知日利率
+                    $loan.dayRate = $loan.rate;
+                    $loan.monRate = $loan.dayRate * 30; //获得了月利率
+                    $loan.yearRate = $loan.monRate * 12;
+                    console.log('----'+$loan.rate+"----"+$loan.dayRate+"----"+$loan.monRate+"--"+$loan.yearRate);
+                    break;
+                case '2':
+                    //已知月利率
+                    $loan.monRate = $loan.rate;
+                    $loan.yearRate = $loan.monRate * 12;
+                    $loan.dayRate = $loan.yearRate / 300;
+                    break;
+                case '3':
+                    //已知年利率
+                    $loan.yearRate = $loan.rate;
+                    $loan.monRate = $loan.yearRate / 12;
+                    $loan.dayRate = $loan.yearRate / 300;
+                    break;
+            }
+            $loan.mrate = $loan.monRate;
+        }
+
+        //等额本息每月明细对象工厂
+        var makeDetailPerM = function(index){
+            var detailPerM = {};
+            //本月还款
+            detailPerM.corpusThisM = getTotalPerM();
+            //当月利息
+            detailPerM.lixi;
+            if(index === 0){
+                //上期剩余本金*月利率
+                detailPerM.lixi = $loan.corpus * $loan.mrate / 100 / 12;
+            }
+            else{
+                detailPerM.lixi = ($loan.corpus - $loan.detailPerMs[index-1].benjinTotal) * $loan.mrate / 100 / 12;
+            }
+            //本金
+            detailPerM.benjin = detailPerM.corpusThisM - detailPerM.lixi;
+
+            //已还本金总额
+            if(index  === 0){
+                detailPerM.benjinTotal = detailPerM.benjin;
+            }
+            else{
+                detailPerM.benjinTotal = $loan.detailPerMs[index-1].benjinTotal + detailPerM.benjin;
+            }
+
+            //已还利息总额
+            if(index === 0){
+                detailPerM.lixiTotal = detailPerM.lixi;
+            }
+            else{
+                detailPerM.lixiTotal = $loan.detailPerMs[index-1].lixiTotal + detailPerM.lixi;
+            }
+
+            //累计还款
+            detailPerM.leiji = detailPerM.corpusThisM * (index + 1);
+            //计算年
+            detailPerM.year = Math.ceil((index+1) / 12);
+            //计算月
+            var month = (index + 1) % 12;
+            detailPerM.month = month == 0 ? 12 : month;
+            return detailPerM;
+        };
+
+        //等额本金 每月明细对象工厂
+        var makeDetailPerMByBenjin = function(index){
+            var detailPerM = {};
+            //本月本金
+            detailPerM.benjin = $loan.corpus / ($loan.period / 12) / 12;
+            //已还本金总额
+            if(index === 0){
+                detailPerM.benjinTotal = detailPerM.benjin;
+            }
+            else{
+                detailPerM.benjinTotal = $loan.corpus / ($loan.period /12) / 12 * (index + 1);
+            }
+            //本月利息
+            if(index === 0){
+                detailPerM.lixi = $loan.corpus * $loan.mrate / 100 / 12;
+            }
+            else{
+                detailPerM.lixi = ($loan.corpus - $loan.detailPerMs[index-1].benjinTotal) * $loan.mrate / 100 / 12;
+            }
+            //本月还款
+            detailPerM.corpusThisM = detailPerM.benjin + detailPerM.lixi
+            //已还利息总额
+            if(index === 0){
+                detailPerM.lixiTotal = detailPerM.lixi;
+            }
+            else{
+                detailPerM.lixiTotal = $loan.detailPerMs[index-1].lixiTotal + detailPerM.lixi;
+            }
+            //累计还款
+            if(index === 0){
+                detailPerM.leiji = detailPerM.benjin + detailPerM.lixi;
+            }
+            else{
+                detailPerM.leiji = $loan.detailPerMs[index-1].leiji + detailPerM.corpusThisM;
+            }
+            //计算年
+            detailPerM.year = Math.ceil((index+1) / 12);
+
+            //计算月
+            var month = (index + 1) % 12;
+            detailPerM.month = month == 0 ? 12 : month;
+            return detailPerM;
+        };
+
+        
+        $('.loan_set .setval').each(function (index){
+            $(this).on('click', function (){
+                $('.loan_set select').hide();
+                $('.loan_set .setval').show();
+                $(this).siblings().show();
+                $(this).hide();
+            });
+        });
+        $('.loan_set').on('change', 'select', function (){
+            var val = $(this).val();
+            var idx = $(this).attr('data-idx');
+            if (idx == 0) {
+                $loan.downpay = val;
+                $loan.corpus = $loan.carPrice - $loan.carPrice * $loan.downpay / 100;
+            } else if (idx == 1) {
+                var rate = 0;
+                $loan.period = val;
+                if (val == 6 || val == 12) {
+                    $loan.rate = 6.56;
+                } else if (val == 18 || val == 24 || val == 30 || val == 36) {
+                    $loan.rate = 6.65;
+                } else if (val == 42 || val == 48 || val == 54 || val == 60) {
+                    $loan.rate = 6.9;
+                }
+                $('.loan_set .solid').text(`${$loan.rate}%`);
+            } else if (idx == 2) {
+                $loan.loadType= val;
+                if (val == 1) {
+                    val = '等额本息';
+                } else if (val == 2) {
+                    val = '等额本金';
+                }
+            }
+            caculate();
+            $(this).siblings().show().find('.num').text(val);
+            $(this).hide();
+        });
+        $('.car_price input').on('input', function (){
+            var carPrice = $(this).val();
+            if (carPrice < 0 || carPrice == '') {
+                carPrice = 0;
+            }
+            if (carPrice.length > 8) {
+                carPrice = carPrice.substr(0, 8);
+                $(this).val(carPrice);
+            }
+            $loan.carPrice = carPrice;
+            $loan.corpus = carPrice - carPrice * $loan.downpay / 100;
+            caculate();
+        });
+
+        // 移动端适配,动态计算屏幕的宽度,从而得到网页的fontSize大小
+        ;(function (doc, win, undefined) {
+            var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in win ? 'orientationchange' : 'resize',
+            recalc = function () {
+            var clientWidth = docEl.clientWidth;
+            if (clientWidth === undefined) {return;}
+            if (clientWidth >= 750){clientWidth=750};
+            docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+            };
+            if (doc.addEventListener === undefined) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</body>
+</html>
