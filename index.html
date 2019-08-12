@@ -89,7 +89,7 @@
         .loan_set .list .item{
             width: 50%;
             float: left;
-            height: .2rem;
+            height: .4rem;
             font-size: .28rem;
             margin: 0 0 .38rem;
         }
@@ -137,7 +137,7 @@
             height: .56rem;
             text-align: center;
         }
-        .repay_detail table tr:first-child{
+        .repay_detail table tr:first-child, .repay_detail table tr:last-child{
             color: #000;
             font-weight: bold;
         }
@@ -294,14 +294,18 @@
         initRateType();
         
         function caculate() {
-            // if(!$loan.corpus || $loan.corpus == 0 || !$loan.rate){
-            //     return ;
-            // }
+            if(!$loan.corpus || $loan.corpus == 0 || !$loan.rate){
+                $('table .item').remove();
+                var value = $('.detail .value');
+                $(value).eq(0).text(`￥0.00`)
+                $(value).eq(1).text(`￥0.00`)
+                $(value).eq(2).text(`￥0.00`)
+                $(value).eq(3).text(`￥0.00`)
+                $('table tbody').append(`<tr class="item"><td>合计</td><td>￥0.00</td><td>￥0.00</td><td>￥0.00</td></tr>`);
+                return ;
+            }
             caculateRate();
             localStorage.setItem('rateType', $loan.rateType);
-            if($loan.constructor == 0){
-                return;
-            }
             if($loan.loadType == 1){
                 getDetailPerMsByBenxi();
                 return;
