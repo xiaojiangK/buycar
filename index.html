@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>购车计算器</title>
     <style>
@@ -331,6 +331,22 @@
         //总利息
         function getRateTotal() {
             return getTotal() - $loan.corpus;
+        }
+        // 格式化金额
+        function abs(num) {
+            num = num.toString().replace(/\$|\,/g,'');
+            if(isNaN(num))
+            num = "0";
+            sign = (num == (num = Math.abs(num)));
+            num = Math.floor(num*100+0.50000000001);
+            cents = num%100;
+            num = Math.floor(num/100).toString();
+            if(cents<10)
+            cents = "0" + cents;
+            for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++)
+            num = num.substring(0,num.length-(4*i+3))+','+
+            num.substring(num.length-(4*i+3));
+            return (((sign)?'':'-') + num + '.' + cents);
         }
         //等额本息获取每月明细
         function getDetailPerMsByBenxi() {
