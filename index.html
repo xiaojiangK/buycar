@@ -18,6 +18,9 @@
             font-size: .24rem;
             background: #fff;
         }
+        ul,li{
+            list-style: none;
+        }
         .wrap{
             width: 100%;
             margin: 0 auto;
@@ -96,24 +99,88 @@
         .loan_set .item .label{
             color: #999;
         }
+        .loan_set .item .select{
+            background: #fff;
+            position: fixed;
+            -webkit-transition: .3s all;
+            transition: .3s all;
+            bottom: -100%;
+            z-index: 999;
+            height: 40%;
+            width: 100%;
+            left: 0;
+        }
+        .loan_set .item .select .list{
+            height: 3.8rem;
+            margin: .4rem 0;
+            overflow-y: auto;
+            text-align: center;
+        }
+        .loan_set .item .select .list li{
+            color: #333;
+            height: .6rem;
+            cursor: pointer;
+            line-height: .6rem;
+        }
+        .loan_set .item .select .list .active{
+            background: #f1f1f1;
+        }
+        .loan_set .item .select.active{
+            display: block;
+        }
+        .loan_set .select .head{
+            width: 100%;
+            height: .8rem;
+            padding: 0 .4rem;
+            border-bottom: 1px solid #e7e7e7;
+        }
+        .loan_set .select .head a{
+            cursor: pointer;
+            font-size: .28rem;
+            line-height: .8rem;
+            text-decoration: none;
+        }
+        .loan_set .select .head .cancel{
+            float: left;
+            color: #878787;
+        }
+        .loan_set .select .head .confirm{
+            color: #109323;
+            float: right;
+        }
+        .mask{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 99;
+            left: 0;
+            top: 0;
+            display: none;
+            background: rgba(0,0,0,.5);
+        }
         .loan_set .item .value{
-            color: #e12525;
             margin: 0 0 0 .2rem;
+        }
+        .loan_set .item .setval{
+            color: #e12525;
         }
         .loan_set .item .solid{
             padding: 0 0 .05rem;
+            color: #e12525;
             border-bottom: .02rem solid #f19797;
+        }
+        .loan_set .item .solid input{
+            width: 35px;
+            border: none;
+            outline: none;
+            -webkit-outline: none;
+            color: #e12525;
         }
         .loan_set .item img{
             width: .12rem;
             height: .22rem;
             margin: 0 0 0 .2rem;
             vertical-align: middle;
-        }
-        .loan_set .item select{
-            display: none;
-            -webkit-outline: none;
-            outline: none;
         }
         .loan_set .detail{
             padding: 0 .3rem .2rem;
@@ -153,6 +220,7 @@
     <div class="wrap">
         <div class="top_bg"></div>
         <div class="main">
+            <div class="mask"></div>
             <div class="buy_item car_price">
                 <div class="title">车辆价格</div>
                 <div class="form">
@@ -167,51 +235,75 @@
                     <div class="item">
                         <span class="label">首付比例</span>
                         <span class="value">
-                            <select data-idx="0">
-                                <option value="0">0</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                                <option value="40">40</option>
-                                <option value="50">50</option>
-                                <option value="60">60</option>
-                                <option value="70">70</option>
-                                <option value="80">80</option>
-                                <option value="90">90</option>
-                                <option value="100">100</option>
-                            </select>
+                            <div class="select">
+                                <div class="head">
+                                    <a href="javascript:;" class="cancel">取消</a> 
+                                    <a href="javascript:;" class="confirm">确定</a> 
+                                </div>
+                                <div class="list">
+                                    <ul>
+                                        <li>0</li>
+                                        <li>10</li>
+                                        <li>20</li>
+                                        <li class="active">30</li>
+                                        <li>40</li>
+                                        <li>50</li>
+                                        <li>60</li>
+                                        <li>70</li>
+                                        <li>80</li>
+                                        <li>90</li>
+                                        <li>100</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <span class="setval"><span class="num">30</span>%<img src="images/right-icon.png" /></span>
                         </span>
                     </div>
                     <div class="item">
                         <span class="label">贷款期限</span>
                         <span class="value">
-                            <select data-idx="1">
-                                <option value="6">6</option>
-                                <option value="12">12</option>
-                                <option value="18">18</option>
-                                <option value="24">24</option>
-                                <option value="30">30</option>
-                                <option value="36">36</option>
-                                <option value="42">42</option>
-                                <option value="48">48</option>
-                                <option value="54">54</option>
-                                <option value="60">60</option>
-                            </select>
+                            <div class="select">
+                                <div class="head">
+                                    <a href="javascript:;" class="cancel">取消</a> 
+                                    <a href="javascript:;" class="confirm">确定</a> 
+                                </div>
+                                <div class="list">
+                                    <ul>
+                                        <li>6</li>
+                                        <li>12</li>
+                                        <li>18</li>
+                                        <li>24</li>
+                                        <li>30</li>
+                                        <li class="active">36</li>
+                                        <li>42</li>
+                                        <li>48</li>
+                                        <li>54</li>
+                                        <li>60</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <span class="setval"><span class="num">36</span>期<img src="images/right-icon.png" /></span>
                         </span>
                     </div>
                     <div class="item">
                         <span class="label">贷款利率</span>
-                        <span class="value solid">6.65%</span>
+                        <span class="value solid"><input type="number" value="6.65" />%</span>
                     </div>
                     <div class="item">
                         <span class="label">还款方式</span>
                         <span class="value">
-                            <select data-idx="2">
-                                <option value="1">等额本息</option>
-                                <option value="2">等额本金</option>
-                            </select>
+                            <div class="select">
+                                <div class="head">
+                                    <a href="javascript:;" class="cancel">取消</a> 
+                                    <a href="javascript:;" class="confirm">确定</a> 
+                                </div>
+                                <div class="list">
+                                    <ul>
+                                        <li data-id="1" class="active">等额本息</li>
+                                        <li data-id="2">等额本金</li>
+                                    </ul>
+                                </div>
+                            </div>
                             <span class="setval"><span class="num">等额本息</span><img src="images/right-icon.png" /></span>
                         </span>
                     </div>
@@ -362,10 +454,10 @@
             }
             $loan.total = (getTotalPerM() * $loan.period).toFixed(2);
             $loan.rateTotal = (getTotal() - $loan.corpus).toFixed(2);
-            $(value).eq(0).text(`￥${($loan.carPrice * $loan.downpay / 100).toFixed(2)}`)
-            $(value).eq(1).text(`￥${$loan.corpus.toFixed(2)}`)
-            $(value).eq(2).text(`￥${$loan.rateTotal}`)
-            $(value).eq(3).text(`￥${$loan.total}`)
+            $(value).eq(0).text(`￥${abs($loan.carPrice * $loan.downpay / 100)}`)
+            $(value).eq(1).text(`￥${abs($loan.corpus)}`)
+            $(value).eq(2).text(`￥${abs($loan.rateTotal)}`)
+            $(value).eq(3).text(`￥${abs($loan.total)}`)
             $('table tbody').append(`<tr class="item"><td>合计</td><td>￥${$loan.corpus.toFixed(2)}</td><td>￥${$loan.rateTotal}</td><td>￥${$loan.total}</td></tr>`);
         }
         //等额本金获取每月明细
@@ -382,10 +474,10 @@
             }
             $loan.total = ($loan.detailPerMs[$loan.period -1].leiji).toFixed(2);
             $loan.rateTotal = ($loan.detailPerMs[$loan.period -1].lixiTotal).toFixed(2);
-            $(value).eq(0).text(`￥${($loan.carPrice * $loan.downpay / 100).toFixed(2)}`)
-            $(value).eq(1).text(`￥${$loan.corpus.toFixed(2)}`)
-            $(value).eq(2).text(`￥${$loan.rateTotal}`)
-            $(value).eq(3).text(`￥${$loan.total}`)
+            $(value).eq(0).text(`￥${abs($loan.carPrice * $loan.downpay / 100)}`)
+            $(value).eq(1).text(`￥${abs($loan.corpus)}`)
+            $(value).eq(2).text(`￥${abs($loan.rateTotal)}`)
+            $(value).eq(3).text(`￥${abs($loan.total)}`)
             $('table tbody').append(`<tr class="item"><td>合计</td><td>￥${$loan.corpus.toFixed(2)}</td><td>￥${$loan.rateTotal}</td><td>￥${$loan.total}</td></tr>`);
 
         }
@@ -503,44 +595,69 @@
             return detailPerM;
         };
 
-        
+        // 点击弹出
         $('.loan_set .setval').each(function (index){
             $(this).on('click', function (){
-                $('.loan_set select').hide();
-                $('.loan_set .setval').show();
-                $(this).siblings().show();
-                $(this).hide();
+                $(this).siblings().css('bottom', 0);
+                $('.mask').fadeIn();
             });
         });
-        $('.loan_set').on('change', 'select', function (){
-            var val = $(this).val();
-            var idx = $(this).attr('data-idx');
-            if (idx == 0) {
-                $loan.downpay = val;
-                $loan.corpus = $loan.carPrice - $loan.carPrice * $loan.downpay / 100;
-            } else if (idx == 1) {
-                var rate = 0;
-                $loan.period = val;
-                if (val == 6 || val == 12) {
-                    $loan.rate = 6.56;
-                } else if (val == 18 || val == 24 || val == 30 || val == 36) {
-                    $loan.rate = 6.65;
-                } else if (val == 42 || val == 48 || val == 54 || val == 60) {
-                    $loan.rate = 6.9;
-                }
-                $('.loan_set .solid').text(`${$loan.rate}%`);
-            } else if (idx == 2) {
-                $loan.loadType= val;
-                if (val == 1) {
-                    val = '等额本息';
-                } else if (val == 2) {
-                    val = '等额本金';
-                }
-            }
-            caculate();
-            $(this).siblings().show().find('.num').text(val);
-            $(this).hide();
+
+        // 点击关闭
+        $('.mask, .select .cancel').on('click', function (){
+            $('.select').css('bottom', '-100%');
+            $('.mask').fadeOut();
         });
+
+        // 点击每个元素
+        $('.select li').each(function (){
+            $(this).on('click', function (){
+                $(this).addClass('active').siblings().removeClass('active');
+            });
+        });
+
+        $('.select').each(function (index){
+            $(this).find('.confirm').on('click', function (){
+                var text = $(this).parents('.select').find('li.active').text();
+                var id = $(this).parents('.select').find('li.active').attr('data-id');
+                if (index == 0) {
+                    $loan.downpay = text;
+                    $loan.corpus = $loan.carPrice - $loan.carPrice * $loan.downpay / 100;
+                } else if (index == 1) {
+                    $loan.period = text;
+                    if (text == 6 || text == 12) {
+                        $loan.rate = 6.56;
+                    } else if (text == 18 || text == 24 || text == 30 || text == 36) {
+                        $loan.rate = 6.65;
+                    } else if (text == 42 || text == 48 || text == 54 || text == 60) {
+                        $loan.rate = 6.9;
+                    }
+                    $('.loan_set .solid input').val(`${$loan.rate}`);
+                } else if (index == 2) {
+                    $loan.loadType= id;
+                    if (id == 1) {
+                        text = '等额本息';
+                    } else if (id == 2) {
+                        text = '等额本金';
+                    }
+                }
+                caculate();
+                $('.mask').fadeOut();
+                $('.select').css('bottom', '-100%');
+                $(this).parents('.select').siblings().find('.num').text(text);
+            });
+        });
+
+        // 贷款利率监听
+        $('.loan_set .solid input').on('input', function (){
+            var rate = $(this).val();
+            if (rate < 0 || rate == '') {
+                rate = 0;
+            }
+            $loan.rate = rate;
+            caculate();
+        });
+        // 输入价格监听
         $('.car_price input').on('input', function (){
             var carPrice = $(this).val();
             if (carPrice < 0 || carPrice == '') {
